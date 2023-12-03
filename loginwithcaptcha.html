@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loginwithcaptcha</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(19, 17, 17);
+        }
+
+        #cap {
+            width: 310px;
+            height: 30px;
+            border: 1px solid rgb(18, 18, 19);
+            background-color: beige;
+            color: rgb(12, 11, 11);
+            font-size:18px;
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        input {
+            width:300px;
+            height: 30px;
+            padding-left: 10px;
+        }
+
+        #ref {
+            /* width:200px;
+            height:25px; */
+            border: 1px solid rgb(129, 122, 122);
+            padding: 2px 5px;
+            color:azure;
+        }
+    </style>
+</head>
+
+<body onload="captcha()">
+    <form>
+        <input type="text" placeholder="username" id="username"><br><br>
+        <input type="password" placeholder="password" id="password"><br><br>
+        <div id="cap"></div><br>
+        <input type="text" name="capt" id="captcha1">
+        <label onclick="captcha()" id="ref">refresh</label><br><br>
+        <button onclick="return login()">login</button>
+    </form>
+
+    <script>
+        let output = '';
+        let dbusername = "admin@gmail.com";
+        let dbpass = "123456";
+        function login(){
+            let loginid = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+            let encaptcha = document.getElementById('captcha1').value;
+            if (dbusername === loginid && dbpass === pass) {
+                //    window.open("../photo-gallary.html");
+                // window.location.href = "../photo-gallary.html";
+
+                if (encaptcha === output) {
+                    window.open("../photo-gallary.html");
+                }
+                else {
+                    window.alert("enter wrong captch")
+                    return false;
+                }
+                // return false;
+            }
+
+            else {
+                window.alert("username and password does not exist please register");
+                return false;
+            }
+            // return false;
+        }
+
+        function captcha() {
+            output = '';
+            let store = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (let i = 0; i < 6; i++) {
+                let len = store.length;
+                let a = Math.random();
+                let randomcombination = len * a;
+                let b = Math.floor(randomcombination);
+
+                // console.log(a);
+                // console.log(len);
+                // console.log(randomcombination);
+                // console.log(b);
+                // console.log(store.charAt(b))
+                output = output + store.charAt(b)
+            }
+            // console.log(output)
+            // document.write(output)
+            document.getElementById('cap').innerHTML = output;
+        }
+    </script>
+</body>
+
+</html>
